@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria Fotográfica</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f8f8;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            padding: 2rem;
+            text-align: center;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .photo-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .photo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .photo-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .photo-info {
+            padding: 1.5rem;
+        }
+        
+        .photo-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .photo-desc {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .photo-price {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #333;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #555;
+        }
+        
+        .btn-download {
+            background: #27ae60;
+        }
+        
+        .btn-download:hover {
+            background: #2ecc71;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Galeria Fotográfica</h1>
+        <p>Fotografias exclusivas para sua coleção</p>
+    </header>
+    
+    <div class="container">
+        <div class="gallery">
+            <!-- Exemplo de cartão de foto -->
+            <div class="photo-card">
+                <img src="/api/placeholder/600/400" alt="Fotografia de paisagem" class="photo-img">
+                <div class="photo-info">
+                    <h3 class="photo-title">Amanhecer nas Montanhas</h3>
+                    <p class="photo-desc">Captura única do nascer do sol entre as montanhas, iluminando o vale com tons dourados e rosados.</p>
+                    <span class="photo-price">R$ 150,00</span>
+                    <button class="btn btn-buy" data-id="foto1">Comprar</button>
+                    <button class="btn btn-download hidden" data-id="foto1">Download</button>
+                </div>
+            </div>
+            
+            <div class="photo-card">
+                <img src="/api/placeholder/600/400" alt="Fotografia de arquitetura" class="photo-img">
+                <div class="photo-info">
+                    <h3 class="photo-title">Arquitetura Urbana</h3>
+                    <p class="photo-desc">Linhas e curvas da arquitetura moderna em contraste com o céu azul vibrante.</p>
+                    <span class="photo-price">R$ 180,00</span>
+                    <button class="btn btn-buy" data-id="foto2">Comprar</button>
+                    <button class="btn btn-download hidden" data-id="foto2">Download</button>
+                </div>
+            </div>
+            
+            <div class="photo-card">
+                <img src="/api/placeholder/600/400" alt="Fotografia de natureza" class="photo-img">
+                <div class="photo-info">
+                    <h3 class="photo-title">Floração Primaveril</h3>
+                    <p class="photo-desc">Campo de flores silvestres capturado no auge da primavera, com cores vibrantes e texturas delicadas.</p>
+                    <span class="photo-price">R$ 135,00</span>
+                    <button class="btn btn-buy" data-id="foto3">Comprar</button>
+                    <button class="btn btn-download hidden" data-id="foto3">Download</button>
+                </div>
+            </div>
+            
+            <!-- Adicione mais cartões conforme necessário -->
+        </div>
+    </div>
+    
+    <div class="modal" id="purchaseModal">
+        <div class="modal-content">
+            <h2>Confirmar Compra</h2>
+            <p>Você está prestes a adquirir esta fotografia.</p>
+            <p><small>Em um site real, aqui seria integrado um sistema de pagamento.</small></p>
+            <button class="btn" id="confirmPurchase">Confirmar Pagamento</button>
+            <button class="btn" id="cancelPurchase" style="background: #e74c3c;">Cancelar</button>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Galeria Fotográfica. Todos os direitos reservados.</p>
+    </footer>
+    
+    <script>
+        // Variáveis para controle
+        let currentPhotoId = null;
+        const modal = document.getElementById('purchaseModal');
+        const confirmBtn = document.getElementById('confirmPurchase');
+        const cancelBtn = document.getElementById('cancelPurchase');
+        
+        // Adicionar evento de compra a todos os botões
+        document.querySelectorAll('.btn-buy').forEach(button => {
+            button.addEventListener('click', function() {
+                currentPhotoId = this.getAttribute('data-id');
+                modal.classList.add('active');
+            });
+        });
+        
+        // Confirmar compra
+        confirmBtn.addEventListener('click', function() {
+            // Esconder modal
+            modal.classList.remove('active');
+            
+            // Encontrar botões relacionados à foto
+            const buyButton = document.querySelector(`.btn-buy[data-id="${currentPhotoId}"]`);
+            const downloadButton = document.querySelector(`.btn-download[data-id="${currentPhotoId}"]`);
+            
+            // Esconder botão de compra e mostrar botão de download
+            buyButton.classList.add('hidden');
+            downloadButton.classList.remove('hidden');
+            
+            // Em um site real, aqui você processaria o pagamento
+            alert('Compra confirmada! O botão de download está disponível.');
+        });
+        
+        // Cancelar compra
+        cancelBtn.addEventListener('click', function() {
+            modal.classList.remove('active');
+            currentPhotoId = null;
+        });
+        
+        // Simular download
+        document.querySelectorAll('.btn-download').forEach(button => {
+            button.addEventListener('click', function() {
+                const photoId = this.getAttribute('data-id');
+                alert(`Iniciando download da foto ${photoId}. Em um site real, isso baixaria o arquivo da imagem.`);
+                
+                // Em um site real, aqui você redirecionaria para o arquivo ou iniciaria o download
+            });
+        });
+    </script>
+</body>
+</html>
