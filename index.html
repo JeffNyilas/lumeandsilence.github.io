@@ -13,16 +13,25 @@
         }
         
         body {
-            background-color: #f8f8f8;
-            color: #333;
+            background-color: #121212;
+            color: #e0e0e0;
             line-height: 1.6;
         }
         
         header {
             padding: 2rem;
             text-align: center;
-            background-color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background-color: #1a1a1a;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            border-bottom: 1px solid #333;
+        }
+        
+        header h1 {
+            color: #fff;
+        }
+        
+        header p {
+            color: #9c7ad6;
         }
         
         .container {
@@ -38,35 +47,45 @@
         }
         
         .photo-card {
-            background: white;
+            background: #1e1e1e;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #333;
+            display: flex;
+            flex-direction: column;
         }
         
         .photo-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            border-color: #444;
         }
         
         .photo-img {
             width: 100%;
-            height: 250px;
+            height: 350px; /* Altura aumentada para melhor acomodar fotos em retrato */
             object-fit: cover;
+            transition: transform 0.3s ease;
+            cursor: zoom-in;
         }
         
         .photo-info {
             padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
         
         .photo-title {
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
+            color: #fff;
         }
         
         .photo-desc {
-            color: #666;
+            color: #b0b0b0;
             margin-bottom: 1rem;
         }
         
@@ -74,6 +93,7 @@
             font-weight: bold;
             display: block;
             margin-bottom: 1rem;
+            color: #9c7ad6;
         }
         
         .btn {
@@ -85,19 +105,28 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 1rem;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
         }
         
         .btn:hover {
             background: #555;
+            transform: translateY(-2px);
+        }
+        
+        .btn-buy {
+            background: #4b2d83;
+        }
+        
+        .btn-buy:hover {
+            background: #5d3ba3;
         }
         
         .btn-download {
-            background: #27ae60;
+            background: #2d6247;
         }
         
         .btn-download:hover {
-            background: #2ecc71;
+            background: #358557;
         }
         
         .hidden {
@@ -110,7 +139,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.9);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -126,19 +155,110 @@
         }
         
         .modal-content {
-            background: white;
+            background: #1e1e1e;
             padding: 2rem;
             border-radius: 8px;
             max-width: 500px;
             width: 100%;
             text-align: center;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            border: 1px solid #333;
+        }
+        
+        .modal-content h2 {
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+        
+        .load-more {
+            text-align: center;
+            margin-top: 3rem;
+            padding-bottom: 2rem;
+        }
+        
+        .btn-load-more {
+            background: #4b2d83;
+            font-size: 1.1rem;
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .btn-load-more:hover {
+            background: #5d3ba3;
         }
         
         footer {
             text-align: center;
             padding: 2rem;
-            background: white;
+            background: #1a1a1a;
             margin-top: 2rem;
+            border-top: 1px solid #333;
+        }
+        
+        /* Novo modal para visualização de imagens */
+        .modal-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-image.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .modal-image-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+        
+        .modal-image-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+        }
+        
+        /* Estilos responsivos */
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .photo-img {
+                height: 300px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .photo-img {
+                height: 400px;
+            }
         }
     </style>
 </head>
@@ -150,51 +270,209 @@
     
     <div class="container">
         <div class="gallery">
-            <!-- Exemplo de cartão de foto -->
+            <!-- Foto 1 -->
             <div class="photo-card">
                 <img src="/api/placeholder/600/400" alt="Fotografia de paisagem" class="photo-img">
                 <div class="photo-info">
                     <h3 class="photo-title">Amanhecer nas Montanhas</h3>
-                    <p class="photo-desc">Captura única do nascer do sol entre as montanhas, iluminando o vale com tons dourados e rosados.</p>
+                    <p class="photo-desc">Captura única do nascer do sol entre as montanhas, iluminando o vale.</p>
                     <span class="photo-price">R$ 150,00</span>
                     <button class="btn btn-buy" data-id="foto1">Comprar</button>
                     <button class="btn btn-download hidden" data-id="foto1">Download</button>
                 </div>
             </div>
             
+            <!-- Foto 2 -->
             <div class="photo-card">
                 <img src="/api/placeholder/600/400" alt="Fotografia de arquitetura" class="photo-img">
                 <div class="photo-info">
                     <h3 class="photo-title">Arquitetura Urbana</h3>
-                    <p class="photo-desc">Linhas e curvas da arquitetura moderna em contraste com o céu azul vibrante.</p>
+                    <p class="photo-desc">Linhas e curvas da arquitetura moderna em contraste com o céu.</p>
                     <span class="photo-price">R$ 180,00</span>
                     <button class="btn btn-buy" data-id="foto2">Comprar</button>
                     <button class="btn btn-download hidden" data-id="foto2">Download</button>
                 </div>
             </div>
             
+            <!-- Foto 3 -->
             <div class="photo-card">
                 <img src="/api/placeholder/600/400" alt="Fotografia de natureza" class="photo-img">
                 <div class="photo-info">
                     <h3 class="photo-title">Floração Primaveril</h3>
-                    <p class="photo-desc">Campo de flores silvestres capturado no auge da primavera, com cores vibrantes e texturas delicadas.</p>
+                    <p class="photo-desc">Campo de flores silvestres capturado no auge da primavera.</p>
                     <span class="photo-price">R$ 135,00</span>
                     <button class="btn btn-buy" data-id="foto3">Comprar</button>
                     <button class="btn btn-download hidden" data-id="foto3">Download</button>
                 </div>
             </div>
             
-            <!-- Adicione mais cartões conforme necessário -->
+            <!-- Foto 4 -->
+            <div class="photo-card">
+                <img src="/api/placeholder/600/400" alt="Fotografia de oceano" class="photo-img">
+                <div class="photo-info">
+                    <h3 class="photo-title">Ondas do Atlântico</h3>
+                    <p class="photo-desc">A força do oceano capturada em uma tarde de tempestade.</p>
+                    <span class="photo-price">R$ 160,00</span>
+                    <button class="btn btn-buy" data-id="foto4">Comprar</button>
+                    <button class="btn btn-download hidden" data-id="foto4">Download</button>
+                </div>
+            </div>
+            
+            <!-- Foto 5 -->
+            <div class="photo-card">
+                <img src="/api/placeholder/600/400" alt="Fotografia de cidade noturna" class="photo-img">
+                <div class="photo-info">
+                    <h3 class="photo-title">Luzes da Cidade</h3>
+                    <p class="photo-desc">Panorama noturno urbano com trilhas de luz dos carros.</p>
+                    <span class="photo-price">R$ 190,00</span>
+                    <button class="btn btn-buy" data-id="foto5">Comprar</button>
+                    <button class="btn btn-download hidden" data-id="foto5">Download</button>
+                </div>
+            </div>
+            
+            <!-- Foto 6 -->
+            <div class="photo-card">
+                <img src="/api/placeholder/600/400" alt="Fotografia de vida selvagem" class="photo-img">
+                <div class="photo-info">
+                    <h3 class="photo-title">Falcão em Voo</h3>
+                    <p class="photo-desc">Majestoso falcão capturado no momento exato do mergulho.</p>
+                    <span class="photo-price">R$ 210,00</span>
+                    <button class="btn btn-buy" data-id="foto6">Comprar</button>
+                    <button class="btn btn-download hidden" data-id="foto6">Download</button>
+                </div>
+            </div>
+            
+            <!-- Foto 7 -->
+            <div class="photo-card">
+                <img src="/api/placeholder/600/400" alt="Fotografia de macro" class="photo-img">
+                <div class="photo-info">
+                    <h3 class="photo-title">Detalhes Ocultos</h3>
+                    <p class="photo-desc">Macro fotografia revelando a beleza de uma gota de orvalho.</p>
+                    <span class="photo-price">R$ 145,00</span>
+                    <button class="btn btn-buy" data-id="foto7">Comprar</button>
+                    <button class="btn btn-download hidden" data-id="foto7">Download</button>
+                </div>
+            </div>
+            
+            <!-- Foto 8 -->
+            <div class="photo-card">
+                <img src="/api/placeholder/600/400" alt="Fotografia de rua" class="photo-img">
+                <div class="photo-info">
+                    <h3 class="photo-title">Contrastes Urbanos</h3>
+                    <p class="photo-desc">Cena cotidiana que revela as múltiplas facetas da vida na cidade.</p>
+                    <span class="photo-price">R$ 155,00</span>
+                    <button class="btn btn-buy" data-id="foto8">Comprar</button>
+                    <button class="btn btn-download hidden" data-id="foto8">Download</button>
+                </div>
+            </div>
+            
+            <!-- Foto 9 -->
+            <div class="photo-card">
+                <img src="/api/placeholder/600/400" alt="Fotografia de outono" class="photo-img">
+                <div class="photo-info">
+                    <h3 class="photo-title">Tons de Outono</h3>
+                    <p class="photo-desc">Caminho florestal coberto por folhas em tons amarelos e vermelhos.</p>
+                    <span class="photo-price">R$ 165,00</span>
+                    <button class="btn btn-buy" data-id="foto9">Comprar</button>
+                    <button class="btn btn-download hidden" data-id="foto9">Download</button>
+                </div>
+            </div>
+            
+            <!-- Foto 10 -->
+            <div class="photo-card">
+                <img src="/api/placeholder/600/400" alt="Fotografia de lago" class="photo-img">
+                <div class="photo-info">
+                    <h3 class="photo-title">Reflexos Perfeitos</h3>
+                    <p class="photo-desc">Lago calmo espelhando perfeitamente as montanhas ao redor.</p>
+                    <span class="photo-price">R$ 175,00</span>
+                    <button class="btn btn-buy" data-id="foto10">Comprar</button>
+                    <button class="btn btn-download hidden" data-id="foto10">Download</button>
+                </div>
+            </div>
+            
+            <!-- Foto 11 -->
+            <div class="photo-card">
+                <img src="/api/placeholder/600/400" alt="Fotografia de céu" class="photo-img">
+                <div class="photo-info">
+                    <h3 class="photo-title">Céu em Chamas</h3>
+                    <p class="photo-desc">Pôr do sol intenso com nuvens dramáticas em tons alaranjados.</p>
+                    <span class="photo-price">R$ 140,00</span>
+                    <button class="btn btn-buy" data-id="foto11">Comprar</button>
+                    <button class="btn btn-download hidden" data-id="foto11">Download</button>
+                </div>
+            </div>
+            
+            <!-- Foto 12 -->
+            <div class="photo-card">
+                <img src="/api/placeholder/600/400" alt="Fotografia de deserto" class="photo-img">
+                <div class="photo-info">
+                    <h3 class="photo-title">Dunas Douradas</h3>
+                    <p class="photo-desc">Paisagem desértica com dunas modeladas pelo vento ao entardecer.</p>
+                    <span class="photo-price">R$ 185,00</span>
+                    <button class="btn btn-buy" data-id="foto12">Comprar</button>
+                    <button class="btn btn-download hidden" data-id="foto12">Download</button>
+                </div>
+            </div>
+            
+            <!-- Foto 13 -->
+            <div class="photo-card">
+                <img src="/api/placeholder/600/400" alt="Fotografia de cachoeira" class="photo-img">
+                <div class="photo-info">
+                    <h3 class="photo-title">Véu d'Água</h3>
+                    <p class="photo-desc">Cachoeira majestosa em meio à floresta tropical preservada.</p>
+                    <span class="photo-price">R$ 195,00</span>
+                    <button class="btn btn-buy" data-id="foto13">Comprar</button>
+                    <button class="btn btn-download hidden" data-id="foto13">Download</button>
+                </div>
+            </div>
+            
+            <!-- Foto 14 -->
+            <div class="photo-card">
+                <img src="/api/placeholder/600/400" alt="Fotografia de inverno" class="photo-img">
+                <div class="photo-info">
+                    <h3 class="photo-title">Silêncio Branco</h3>
+                    <p class="photo-desc">Paisagem coberta de neve intocada após uma noite de nevasca.</p>
+                    <span class="photo-price">R$ 170,00</span>
+                    <button class="btn btn-buy" data-id="foto14">Comprar</button>
+                    <button class="btn btn-download hidden" data-id="foto14">Download</button>
+                </div>
+            </div>
+            
+            <!-- Foto 15 -->
+            <div class="photo-card">
+                <img src="/api/placeholder/600/400" alt="Fotografia de aurora boreal" class="photo-img">
+                <div class="photo-info">
+                    <h3 class="photo-title">Luzes do Norte</h3>
+                    <p class="photo-desc">Aurora boreal dançando no céu noturno sobre um lago gelado.</p>
+                    <span class="photo-price">R$ 220,00</span>
+                    <button class="btn btn-buy" data-id="foto15">Comprar</button>
+                    <button class="btn btn-download hidden" data-id="foto15">Download</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Botão Carregar Mais -->
+        <div class="load-more">
+            <button class="btn btn-load-more" id="loadMoreBtn">Carregar Mais Fotografias</button>
         </div>
     </div>
     
+    <!-- Modal de compra -->
     <div class="modal" id="purchaseModal">
         <div class="modal-content">
             <h2>Confirmar Compra</h2>
             <p>Você está prestes a adquirir esta fotografia.</p>
             <p><small>Em um site real, aqui seria integrado um sistema de pagamento.</small></p>
-            <button class="btn" id="confirmPurchase">Confirmar Pagamento</button>
-            <button class="btn" id="cancelPurchase" style="background: #e74c3c;">Cancelar</button>
+            <button class="btn btn-buy" id="confirmPurchase">Confirmar Pagamento</button>
+            <button class="btn" id="cancelPurchase" style="background: #833333;">Cancelar</button>
+        </div>
+    </div>
+    
+    <!-- Modal de visualização de imagem -->
+    <div class="modal-image" id="imageModal">
+        <div class="modal-image-content">
+            <button class="close-modal" id="closeImageModal">&times;</button>
+            <img id="fullSizeImage" src="" alt="Imagem em tamanho completo">
         </div>
     </div>
     
@@ -208,13 +486,57 @@
         const modal = document.getElementById('purchaseModal');
         const confirmBtn = document.getElementById('confirmPurchase');
         const cancelBtn = document.getElementById('cancelPurchase');
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        const imageModal = document.getElementById('imageModal');
+        const fullSizeImage = document.getElementById('fullSizeImage');
+        const closeImageModal = document.getElementById('closeImageModal');
+        let page = 1;
+        
+        // Inicializar eventos de compra para os botões existentes
+        initBuyButtons();
+        initImageZoom();
         
         // Adicionar evento de compra a todos os botões
-        document.querySelectorAll('.btn-buy').forEach(button => {
-            button.addEventListener('click', function() {
-                currentPhotoId = this.getAttribute('data-id');
-                modal.classList.add('active');
+        function initBuyButtons() {
+            document.querySelectorAll('.btn-buy').forEach(button => {
+                button.addEventListener('click', function() {
+                    currentPhotoId = this.getAttribute('data-id');
+                    modal.classList.add('active');
+                });
             });
+            
+            // Inicializar botões de download
+            document.querySelectorAll('.btn-download').forEach(button => {
+                button.addEventListener('click', function() {
+                    const photoId = this.getAttribute('data-id');
+                    alert(`Iniciando download da foto ${photoId}. Em um site real, isso baixaria o arquivo da imagem.`);
+                });
+            });
+        }
+        
+        // Inicializar zoom de imagem
+        function initImageZoom() {
+            document.querySelectorAll('.photo-img').forEach(img => {
+                img.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Evitar que o evento de clique se propague para outros elementos
+                    // Em um site real, você usaria a URL da imagem real em alta resolução
+                    fullSizeImage.src = this.src;
+                    fullSizeImage.alt = this.alt;
+                    imageModal.classList.add('active');
+                });
+            });
+        }
+        
+        // Fechar o modal de imagem
+        closeImageModal.addEventListener('click', function() {
+            imageModal.classList.remove('active');
+        });
+        
+        // Fechar também quando clicar fora da imagem
+        imageModal.addEventListener('click', function(e) {
+            if (e.target === imageModal) {
+                imageModal.classList.remove('active');
+            }
         });
         
         // Confirmar compra
@@ -240,15 +562,76 @@
             currentPhotoId = null;
         });
         
-        // Simular download
-        document.querySelectorAll('.btn-download').forEach(button => {
-            button.addEventListener('click', function() {
-                const photoId = this.getAttribute('data-id');
-                alert(`Iniciando download da foto ${photoId}. Em um site real, isso baixaria o arquivo da imagem.`);
-                
-                // Em um site real, aqui você redirecionaria para o arquivo ou iniciaria o download
-            });
+        // Carregar mais fotos
+        loadMoreBtn.addEventListener('click', function() {
+            // Simular um carregamento (em um site real, isso faria uma requisição AJAX)
+            this.textContent = 'Carregando...';
+            
+            // Simular tempo de carregamento
+            setTimeout(() => {
+                loadMorePhotos();
+                this.textContent = 'Carregar Mais Fotografias';
+            }, 800);
         });
+        
+        // Função para carregar mais fotos
+        function loadMorePhotos() {
+            page++;
+            
+            // Em um site real, isso buscaria mais dados do servidor
+            // Aqui vamos simular adicionando mais cards
+            
+            // Exemplo de dados para novas fotos (em produção, viriam do servidor)
+            const newPhotos = [
+                {id: 'foto16', title: 'Ruas de Veneza', desc: 'Canal veneziano fotografado ao amanhecer com gôndolas ancoradas.', price: '175,00'},
+                {id: 'foto17', title: 'Metrópole Vertical', desc: 'Arranha-céus modernos retratados de um ângulo inusitado.', price: '165,00'},
+                {id: 'foto18', title: 'Entardecer no Campo', desc: 'Pôr do sol sobre campos de lavanda em plena floração.', price: '150,00'},
+                {id: 'foto19', title: 'Após a Chuva', desc: 'Arco-íris duplo fotografado após uma tempestade de verão.', price: '180,00'},
+                {id: 'foto20', title: 'Bosque Misterioso', desc: 'Floresta envolta em névoa matinal, criando uma atmosfera etérea.', price: '160,00'},
+                {id: 'foto21', title: 'Horizontes Infinitos', desc: 'Vista panorâmica capturada do topo de uma montanha.', price: '195,00'},
+                {id: 'foto22', title: 'Geometria Natural', desc: 'Padrões geométricos encontrados em formações rochosas.', price: '145,00'},
+                {id: 'foto23', title: 'Mar de Estrelas', desc: 'Via Láctea fotografada em uma noite sem lua no deserto.', price: '210,00'},
+                {id: 'foto24', title: 'Texturas da Terra', desc: 'Padrões abstratos formados por rios no delta.', price: '170,00'},
+                {id: 'foto25', title: 'Momentos Congelados', desc: 'Gotas de água capturadas em alta velocidade.', price: '155,00'},
+                {id: 'foto26', title: 'Raios de Luz', desc: 'Feixes de luz penetrando através das copas das árvores.', price: '165,00'},
+                {id: 'foto27', title: 'Alma da Cidade', desc: 'Estação de metrô vazia no meio da noite.', price: '175,00'},
+                {id: 'foto28', title: 'Cores do Recife', desc: 'Vida marinha colorida fotografada em águas cristalinas.', price: '190,00'},
+                {id: 'foto29', title: 'Harmonia Urbana', desc: 'Linhas arquitetônicas de um bairro planejado visto de cima.', price: '180,00'},
+                {id: 'foto30', title: 'Dança dos Elementos', desc: 'Composição abstrata de fogo e água em movimento.', price: '205,00'}
+            ];
+            
+            // Se já carregou todas as fotos (simulação), desabilita o botão
+            if (page > 2) {
+                loadMoreBtn.disabled = true;
+                loadMoreBtn.textContent = 'Todas as fotos carregadas';
+                loadMoreBtn.style.opacity = '0.7';
+                loadMoreBtn.style.cursor = 'default';
+            }
+            
+            // Criar e adicionar novas fotos
+            const gallery = document.querySelector('.gallery');
+            
+            newPhotos.forEach(photo => {
+                const photoCard = document.createElement('div');
+                photoCard.className = 'photo-card';
+                photoCard.innerHTML = `
+                    <img src="/api/placeholder/600/400" alt="${photo.title}" class="photo-img">
+                    <div class="photo-info">
+                        <h3 class="photo-title">${photo.title}</h3>
+                        <p class="photo-desc">${photo.desc}</p>
+                        <span class="photo-price">R$ ${photo.price}</span>
+                        <button class="btn btn-buy" data-id="${photo.id}">Comprar</button>
+                        <button class="btn btn-download hidden" data-id="${photo.id}">Download</button>
+                    </div>
+                `;
+                
+                gallery.appendChild(photoCard);
+            });
+            
+            // Inicializar eventos para os novos botões
+            initBuyButtons();
+            initImageZoom();
+        }
     </script>
 </body>
 </html>
